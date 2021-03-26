@@ -55,7 +55,7 @@ namespace API.Controllers
 
                 SqlConnection sqlConnection = new SqlConnection(connectionString);
 
-                string query = @"exec spFoodOrderPizza_PostFoodOrderPizza @PizzaID = "+FOP.PizzaID+", @OrderID = "+FOP.OrderID+";";
+                string query = @"exec spFoodOrderPizza_PostFoodOrderPizza @PizzaID = "+FOP.PizzaID+", @OrderID = "+FOP.OrderID+", @OrderItemIndex= "+FOP.OrderItemIndex+";";
 
                 
 

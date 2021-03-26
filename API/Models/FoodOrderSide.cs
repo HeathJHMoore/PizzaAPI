@@ -10,5 +10,7 @@ namespace API.Models
         public int SideID { get; set; }
 
         public int OrderID { get; set; }
+
+        public int OrderItemIndex { get; set; }
     }
 }

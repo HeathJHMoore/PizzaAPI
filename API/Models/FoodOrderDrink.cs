@@ -10,5 +10,8 @@ namespace API.Models
         public int DrinkID { get; set; }
 
         public int OrderID { get; set; }
+
+        public int OrderItemIndex { get; set; }
+
     }
 }
