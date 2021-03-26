@@ -11,8 +11,41 @@ using API.Models;
 
 namespace API.Controllers
 {
+    
     public class OrderSideController : ApiController
     {
+        [Route("api/orderside/{orderID}")]
+        public HttpResponseMessage GET(int orderID)
+        {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["PizzaAppDB"].ConnectionString;
+
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                string query = "SELECT * FROM dbo.FoodOrderSide WHERE OrderID = " + orderID.ToString() + ";";
+
+                SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+
+                DataTable dataTable = new DataTable();
+
+                using (sqlDataAdapter)
+                {
+
+                    sqlCommand.CommandType = CommandType.Text;
+                    sqlDataAdapter.Fill(dataTable);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, dataTable);
+
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
         public HttpResponseMessage POST(FoodOrderSide FOS)
         {
             try
