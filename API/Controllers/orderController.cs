@@ -12,8 +12,39 @@ using API.Models;
 namespace API.Controllers
 {
     
-    public class orderController : ApiController
+    public class OrderController : ApiController
     {
+        public HttpResponseMessage GET()
+        {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["PizzaAppDB"].ConnectionString;
+
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                string query = @"SELECT * FROM dbo.FoodOrder";
+
+                SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+
+                DataTable idTable = new DataTable();
+
+                using (sqlDataAdapter)
+                {
+                    sqlCommand.CommandType = CommandType.Text;
+
+                    sqlDataAdapter.Fill(idTable);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, idTable);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
         [HttpPost]
         public HttpResponseMessage POST()
         {

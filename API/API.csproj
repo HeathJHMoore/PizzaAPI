@@ -162,8 +162,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\DrinkController.cs" />
+    <Compile Include="Controllers\FavoritePizzaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\orderController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderDrinkController.cs" />
     <Compile Include="Controllers\OrderPizzaController.cs" />
     <Compile Include="Controllers\OrderSideController.cs" />
