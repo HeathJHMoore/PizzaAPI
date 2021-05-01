@@ -28,16 +28,22 @@ namespace API.Controllers
 
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
 
-                DataTable idTable = new DataTable();
+                DataTable FoodOrderTable = new DataTable();
 
                 using (sqlDataAdapter)
                 {
                     sqlCommand.CommandType = CommandType.Text;
 
-                    sqlDataAdapter.Fill(idTable);
+                    sqlDataAdapter.Fill(FoodOrderTable);
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, idTable);
+                List<int> idList = new List<int>();
+
+                idList = (from DataRow foodOrderRow in FoodOrderTable.Rows
+                         orderby foodOrderRow["orderID"]
+                         select Convert.ToInt32(foodOrderRow["orderID"])).ToList();
+
+                return Request.CreateResponse(HttpStatusCode.OK, FoodOrderTable);
             }
             catch
             {

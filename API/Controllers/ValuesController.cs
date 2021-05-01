@@ -13,13 +13,13 @@ namespace API.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
-        public HttpResponseMessage Get()
+        public List<Employee> Get()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["PizzaAppDB"].ConnectionString;
 
             SqlConnection sqlConnection = new SqlConnection(connectionString);
 
-            string query = @"SELECT * FROM dbo.Department";
+            string query = @"SELECT * FROM dbo.Employee";
 
             SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
 
@@ -34,8 +34,22 @@ namespace API.Controllers
                 sqlDataAdapter.Fill(employeeTable);
             }
 
+            
+            List<Employee> employeeList = new List<Employee>();
 
-                return Request.CreateResponse(HttpStatusCode.OK, employeeTable);
+            employeeList = (from DataRow dr in employeeTable.Rows
+                            orderby dr["EmployeeId"]
+                            select new Employee()
+                            {
+                                EmployeeId = Convert.ToInt32(dr["EmployeeId"]),
+                                EmployeeName = dr["EmployeeName"].ToString(),
+                                Department = dr["Department"].ToString()
+                            }).ToList();
+
+            
+
+
+                return employeeList;
         }
 
         //POST METHOD
